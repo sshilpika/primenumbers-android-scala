@@ -24,3 +24,4 @@ See also the [corresponding web service](https://github.com/webservices-cs-luc-e
 - Typed AsyncTask that hides the need to use AnyRef for input and progress
   values
 - Testing
+- Make more functional
