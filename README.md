@@ -6,7 +6,11 @@
 
 See also the [corresponding web service](https://github.com/webservices-cs-luc-edu/primenumbers-spray-scala).
 
-# Sample prime numbers to try
+# Building and Running
+
+See the detailed instructions [here](https://bitbucket.org/loyolachicagocs_plsystems/clickcounter-android-scala).
+
+## Sample prime numbers to try
 
 - 1013
 - 10007
