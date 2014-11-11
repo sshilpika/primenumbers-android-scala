@@ -1,5 +1,7 @@
-resolvers += Resolver.url("scalasbt releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases"))(Resolver.ivyStylePatterns)
+addSbtPlugin("com.hanhuy.sbt" % "android-sdk-plugin" % "1.3.5")
 
-addSbtPlugin("org.scala-sbt" % "sbt-android-plugin" % "0.6.2")
+addSbtPlugin("com.hanhuy.sbt" % "sbt-idea" % "1.7.0-SNAPSHOT")
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.1.1")
+resolvers += Resolver.sbtPluginRepo("snapshots")
+
+addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "0.99.7.1")
