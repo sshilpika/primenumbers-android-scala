@@ -1,15 +1,13 @@
 package edu.luc.etl.cs313.android.scala.primechecker
 
-import java.net.URL
-
-import org.apache.http.HttpResponse
-import org.apache.http.client.HttpClient
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.DefaultHttpClient
-
 import android.graphics.Color
-import android.os.AsyncTask
+import android.util.Log
 import android.widget.{ ProgressBar, TextView }
+
+import com.loopj.android.http.AsyncHttpClient
+import com.loopj.android.http.AsyncHttpResponseHandler
+import com.loopj.android.http.RequestHandle
+import org.apache.http.Header
 
 /**
  * Background task for checking remotely whether a number is prime.
@@ -19,40 +17,48 @@ import android.widget.{ ProgressBar, TextView }
  * Using AnyRef instead of Long as the type parameter to work around
  * a problem with Android not finding our implementation of doInBackground.
  */
-class PrimeCheckerRemoteTask(progressBar: ProgressBar, input: TextView)
-  extends AsyncTask[AnyRef, Void, Boolean] {
+class PrimeCheckerRemoteTask(progressBar: ProgressBar, input: TextView) {
 
-  private var request: HttpGet = null
+  private val TAG = "edu.luc.etl.cs313.android.primechecker.android.PrimeCheckerRemoteTask"
 
-  override protected def onPreExecute() {
+  private var request: RequestHandle = _
+
+  def start(url: String): Unit = {
+    Log.d(TAG, "starting request for URL = " + url)
     progressBar.setMax(100)
-    input.setBackgroundColor(Color.YELLOW)
-  }
-
-  override protected def doInBackground(params: AnyRef*): Boolean = {
-    require { params.length == 1 }
-    val url = params(0).asInstanceOf[URL]
     progressBar.setIndeterminate(true)
-    request = new HttpGet(url.toURI)
-    val response = (new DefaultHttpClient).execute(request)
-    val status = response.getStatusLine.getStatusCode
-    if (status == 200)
-      true
-    else if (status == 404)
-      false
-    else
-      throw new RuntimeException("unexpected server response")
+    input.setBackgroundColor(Color.YELLOW)
+    Log.d(TAG, "creating client")
+    val client = new AsyncHttpClient
+    Log.d(TAG, "submitting request to " + client)
+    request = client.get(url, new AsyncHttpResponseHandler {
+      override def onStart() = Log.d(TAG, "request started")
+      override def onSuccess(statusCode: Int, headers: Array[Header], responseBody: Array[Byte]) = {
+        Log.d(TAG, "request handled successfully with status code " + statusCode)
+        input.setBackgroundColor(if (statusCode == 200) Color.GREEN else Color.MAGENTA)
+      }
+      override def onFailure(statusCode: Int, headers: Array[Header], responseBody: Array[Byte], error: Throwable) = {
+        Log.d(TAG, "request failed with status code " + statusCode)
+        input.setBackgroundColor(if (statusCode == 404) Color.RED else Color.MAGENTA)
+        if (error != null) {
+          Log.d(TAG, "request failed with error " + error)
+        }
+      }
+      override def onFinish() = {
+        progressBar.setIndeterminate(false)
+        progressBar.setProgress(100)
+      }
+    })
+    Log.d(TAG, "submitted request")
   }
 
-  override protected def onPostExecute(result: Boolean) {
-    progressBar.setIndeterminate(false)
-    progressBar.setProgress(100)
-    input.setBackgroundColor(if (result) Color.GREEN else Color.RED)
-  }
-
-  override protected def onCancelled(result: Boolean) {
+  def cancel(): Unit = {
+    Log.d(TAG, "canceling request")
     progressBar.setIndeterminate(false)
     input.setBackgroundColor(Color.WHITE)
-    request.abort()
+    request.cancel(true)
+    Log.d(TAG, "canceled request")
   }
+
+  // end-method-remoteCancel
 }

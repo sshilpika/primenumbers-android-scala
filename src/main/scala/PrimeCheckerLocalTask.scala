@@ -17,7 +17,7 @@ import android.widget.TextView
 class PrimeCheckerLocalTask(progressBar: ProgressBar, input: TextView)
   extends AsyncTask[AnyRef, AnyRef, Boolean] {
 
-  override def onPreExecute() {
+  override def onPreExecute() = {
     progressBar.setMax(100)
     input.setBackgroundColor(Color.YELLOW)
   }
@@ -36,15 +36,12 @@ class PrimeCheckerLocalTask(progressBar: ProgressBar, input: TextView)
     true
   }
 
-  override protected def onProgressUpdate(values: AnyRef*) {
+  override protected def onProgressUpdate(values: AnyRef*) =
     progressBar.setProgress(values(0).asInstanceOf[Integer].toInt)
-  }
 
-  override protected def onPostExecute(result: Boolean) {
+  override protected def onPostExecute(result: Boolean) =
     input.setBackgroundColor(if (result) Color.GREEN else Color.RED)
-  }
 
-  override protected def onCancelled(result: Boolean) {
+  override protected def onCancelled(result: Boolean) =
     input.setBackgroundColor(Color.WHITE)
-  }
 }

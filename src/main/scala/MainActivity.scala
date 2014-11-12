@@ -1,11 +1,9 @@
 package edu.luc.etl.cs313.android.scala.primechecker
 
-import java.net.{ MalformedURLException, URL }
-import java.util.{ ArrayList, List }
-import scala.collection.mutable.{ ArraySeq, ArrayBuffer }
+import scala.collection.mutable.ArrayBuffer
 import android.os.{ AsyncTask, Bundle }
 import android.app.Activity
-import android.view.{ Menu, View }
+import android.view.View
 import android.widget.{ ProgressBar, TextView, ToggleButton }
 import scala.collection.mutable.ArraySeq
 
@@ -25,14 +23,14 @@ class MainActivity extends Activity with TypedActivity {
 
   private val localTasks = new ArrayBuffer[AsyncTask[AnyRef, AnyRef, Boolean]](NUM)
 
-  private val remoteTasks = new ArrayBuffer[AsyncTask[AnyRef, Void, Boolean]](NUM);
+  private val remoteTasks = new ArrayBuffer[PrimeCheckerRemoteTask](NUM);
 
-  override def onCreate(savedInstanceState: Bundle) {
+  override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
   }
 
-  override def onResume() {
+  override def onResume() = {
     super.onResume()
     input = findView(TR.inputCandidate)
     progressBars(0) = findView(TR.progressBar1)
@@ -43,12 +41,12 @@ class MainActivity extends Activity with TypedActivity {
     urls(2) = findView(TR.inputUrl3)
   }
 
-  override def onDestroy() {
+  override def onDestroy() = {
     super.onDestroy()
     onCancel(input)
   }
 
-  def onCheck(view: View) {
+  def onCheck(view: View): Unit = {
     onCancel(view)
     for (i <- 0 until NUM) {
       progressBars(i).setProgress(0)
@@ -56,8 +54,7 @@ class MainActivity extends Activity with TypedActivity {
         if (remotes(i)) {
           val t = new PrimeCheckerRemoteTask(progressBars(i), input)
           remoteTasks.append(t)
-          val url = new URL(urls(i).getText.toString + input.getText.toString)
-          t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url)
+          t.start(urls(i).getText.toString + input.getText.toString)
         } else {
           val t = new PrimeCheckerLocalTask(progressBars(i), input)
           localTasks.append(t)
@@ -67,25 +64,21 @@ class MainActivity extends Activity with TypedActivity {
     }
   }
 
-  def onCancel(view: View) {
+  def onCancel(view: View): Unit = {
     localTasks foreach { _ cancel true }
-    remoteTasks foreach { _ cancel true }
+    remoteTasks foreach { _ cancel () }
     localTasks.clear()
     remoteTasks.clear()
   }
 
-  def onWorker(number: Int, enabled: Boolean) {
-    workers(number) = enabled
-  }
+  def onWorker(number: Int, enabled: Boolean): Unit = workers(number) = enabled
 
-  def onRemote(number: Int, enabled: Boolean) {
-    remotes(number) = enabled
-  }
+  def onRemote(number: Int, enabled: Boolean): Unit = remotes(number) = enabled
 
-  def onWorker1(view: View) { onWorker(0, view.asInstanceOf[ToggleButton].isChecked) }
-  def onWorker2(view: View) { onWorker(1, view.asInstanceOf[ToggleButton].isChecked) }
-  def onWorker3(view: View) { onWorker(2, view.asInstanceOf[ToggleButton].isChecked) }
-  def onRemote1(view: View) { onRemote(0, view.asInstanceOf[ToggleButton].isChecked) }
-  def onRemote2(view: View) { onRemote(1, view.asInstanceOf[ToggleButton].isChecked) }
-  def onRemote3(view: View) { onRemote(2, view.asInstanceOf[ToggleButton].isChecked) }
+  def onWorker1(view: View): Unit = onWorker(0, view.asInstanceOf[ToggleButton].isChecked)
+  def onWorker2(view: View): Unit = onWorker(1, view.asInstanceOf[ToggleButton].isChecked)
+  def onWorker3(view: View): Unit = onWorker(2, view.asInstanceOf[ToggleButton].isChecked)
+  def onRemote1(view: View): Unit = onRemote(0, view.asInstanceOf[ToggleButton].isChecked)
+  def onRemote2(view: View): Unit = onRemote(1, view.asInstanceOf[ToggleButton].isChecked)
+  def onRemote3(view: View): Unit = onRemote(2, view.asInstanceOf[ToggleButton].isChecked)
 }

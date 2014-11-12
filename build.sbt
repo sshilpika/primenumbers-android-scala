@@ -19,6 +19,7 @@ scalacOptions in Compile ++= Seq("-feature", "-unchecked", "-deprecation")
 platformTarget in Android := "android-19"
 
 libraryDependencies ++= Seq(
+  "com.loopj.android" % "android-async-http" % "1.4.+",
   "org.robolectric" % "robolectric" % "2.3" % "test",
   "junit" % "junit" % "4.11" % "test",
   "org.mockito" % "mockito-core" % "1.9.5" % "test",
