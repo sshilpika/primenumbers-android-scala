@@ -29,6 +29,7 @@ class MainActivity extends Activity with TypedActivity {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
     Rollbar.init(this, "76db56167ee949ffba208fd3e6331241", "production")
+    Rollbar.reportMessage("Starting primenumber-android-scala", "debug")
   }
 
   override def onResume() = {
