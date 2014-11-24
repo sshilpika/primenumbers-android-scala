@@ -5,7 +5,7 @@ import android.app.Activity
 import android.os.Bundle
 import com.rollbar.android.Rollbar
 
-/** Support for the Rollbar cloud-based logging service. */
+/** Mixin (stackable trait) providing support for the Rollbar cloud-based logging service. */
 trait RollbarSupport extends Activity {
 
   override def onCreate(savedInstanceState: Bundle) = {
