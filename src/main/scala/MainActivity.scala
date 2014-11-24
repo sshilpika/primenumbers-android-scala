@@ -1,11 +1,11 @@
 package edu.luc.etl.cs313.android.scala.primechecker
 
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ ArraySeq, ArrayBuffer }
 import android.os.{ AsyncTask, Bundle }
 import android.app.Activity
 import android.view.View
 import android.widget.{ ProgressBar, TextView, ToggleButton }
-import scala.collection.mutable.ArraySeq
+import com.rollbar.android.Rollbar
 
 class MainActivity extends Activity with TypedActivity {
 
@@ -28,6 +28,7 @@ class MainActivity extends Activity with TypedActivity {
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
+    Rollbar.init(this, "76db56167ee949ffba208fd3e6331241", "production")
   }
 
   override def onResume() = {

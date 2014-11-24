@@ -16,8 +16,11 @@ scalacOptions in Compile ++= Seq("-feature", "-unchecked", "-deprecation")
 
 platformTarget in Android := "android-19"
 
+resolvers += "loyolachicagocode@bintray" at "http://dl.bintray.com/loyolachicagocode/maven"
+
 libraryDependencies ++= Seq(
   "com.loopj.android" % "android-async-http" % "1.4.+",
+  "rollbar" % "rollbar-android" % "0.1.1",
   "org.robolectric" % "robolectric" % "2.3" % "test",
   "junit" % "junit" % "4.11" % "test",
   "org.mockito" % "mockito-core" % "1.9.5" % "test",
@@ -44,7 +47,13 @@ proguardOptions in Android ++= Seq(
 // Required so Proguard won't remove the actual instrumentation tests.
 proguardOptions in Android ++= Seq(
   "-keep public class * extends junit.framework.TestCase",
-  "-keepclassmembers class * extends junit.framework.TestCase { *; }"
+  "-keepclassmembers class * extends junit.framework.TestCase { *; }",
+  "-keepattributes SourceFile,LineNumberTable"
+)
+
+// Required for Rollbar cloud-based exception monitoring
+proguardOptions in Android ++= Seq(
+  "-keepattributes SourceFile,LineNumberTable"
 )
 
 apkbuildExcludes in Android += "LICENSE.txt"
@@ -59,3 +68,7 @@ ScoverageKeys.excludedPackages in ScoverageCompile := """.*\.TR.*;.*\.TypedLayou
 org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
 
 managedClasspath in ScoverageCompile <++= androidJars
+
+seq(bintrayResolverSettings:_*)
+
+resolvers += bintray.Opts.resolver.repo("loyolachicagocode", "maven")
