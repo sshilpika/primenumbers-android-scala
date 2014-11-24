@@ -68,7 +68,3 @@ ScoverageKeys.excludedPackages in ScoverageCompile := """.*\.TR.*;.*\.TypedLayou
 org.scoverage.coveralls.CoverallsPlugin.coverallsSettings
 
 managedClasspath in ScoverageCompile <++= androidJars
-
-seq(bintrayResolverSettings:_*)
-
-resolvers += bintray.Opts.resolver.repo("loyolachicagocode", "maven")
