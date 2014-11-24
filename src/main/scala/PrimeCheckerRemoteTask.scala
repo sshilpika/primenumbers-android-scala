@@ -19,8 +19,6 @@ import org.apache.http.Header
  */
 class PrimeCheckerRemoteTask(progressBar: ProgressBar, input: TextView) {
 
-  private val TAG = "edu.luc.etl.cs313.android.primechecker.android.PrimeCheckerRemoteTask"
-
   private var request: RequestHandle = _
 
   def start(url: String): Unit = {

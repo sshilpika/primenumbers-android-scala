@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.{ ProgressBar, TextView, ToggleButton }
 import com.rollbar.android.Rollbar
 
-class MainActivity extends Activity with TypedActivity {
+class MainActivity extends Activity with TypedActivity with RollbarSupport {
 
   private var input: TextView = null
 
@@ -28,8 +28,6 @@ class MainActivity extends Activity with TypedActivity {
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
-    Rollbar.init(this, "76db56167ee949ffba208fd3e6331241", "production")
-    Rollbar.reportMessage("Starting primenumber-android-scala", "debug")
   }
 
   override def onResume() = {
