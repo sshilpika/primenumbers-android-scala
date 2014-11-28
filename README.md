@@ -21,7 +21,7 @@ This is a very rough initial attempt and still needs significant work.
 - asynchronous access of remote resources (usually RESTful web services) in Android using [AsyncHttpClient](http://loopj.com/android-async-http)
 - remote logging to a [cloud-based exception monitoring service](https://rollbar.com)
 
-See also the [corresponding web service](https://github.com/lucoodevcourse/primenumbers-spray-scala).
+See also the [corresponding web service](https://github.com/LoyolaChicagoCode/primenumbers-spray-scala)
 
 # Building and Running
 
