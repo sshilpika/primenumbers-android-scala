@@ -13,9 +13,6 @@ import org.apache.http.Header
  * Background task for checking remotely whether a number is prime.
  * Expects at the given URL a suitable cloud service such as an instance of
  * https://github.com/webservices-cs-luc-edu/primenumbers-spray-scala
- *
- * Using AnyRef instead of Long as the type parameter to work around
- * a problem with Android not finding our implementation of doInBackground.
  */
 class PrimeCheckerRemoteTask(progressBar: ProgressBar, input: TextView) {
 

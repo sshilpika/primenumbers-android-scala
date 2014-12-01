@@ -59,7 +59,7 @@ class MainActivity extends Activity with TypedActivity with RollbarSupport {
           val t = new PrimeCheckerLocalTask(progressBars(i), input)
           localTasks.append(t)
           t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-            input.getText.toString.toLong: java.lang.Long)
+            Int.box(input.getText.toString.toInt))
         }
     }
   }

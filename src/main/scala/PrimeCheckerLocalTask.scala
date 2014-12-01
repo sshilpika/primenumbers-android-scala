@@ -11,8 +11,10 @@ import android.widget.TextView
  * Implemented using a brute-force algorithm as a CPU-intensive task with
  * observable progress.
  *
- * Using AnyRef instead of Long as the type parameter to work around
+ * Using AnyRef instead of Int as the type parameter to work around
  * a problem with Android not finding our implementation of doInBackground.
+ * (Unresolved Scala-Java vararg interoperability issue:
+ * http://piotrbuda.eu/2012/12/scala-and-android-asynctask-implementation-problem.html)
  */
 class PrimeCheckerLocalTask(progressBar: ProgressBar, input: TextView)
   extends AsyncTask[AnyRef, AnyRef, Boolean] {
@@ -24,20 +26,21 @@ class PrimeCheckerLocalTask(progressBar: ProgressBar, input: TextView)
 
   override protected def doInBackground(params: AnyRef*): Boolean = {
     require { params.length == 1 }
-    val i = params(0).asInstanceOf[Long].toInt
+    val i = params(0).asInstanceOf[Int]
     if (i < 2) return false
     val half = i / 2
-    val dHalf = half.toDouble
-    for (k <- 2 to half.toInt) {
+    var k = 2
+    while (k <= half) {
       if (isCancelled()) break
-      publishProgress(((k / dHalf) * 100).toInt: java.lang.Integer)
+      publishProgress(Int.box(k * 100 / half))
       if (i % k == 0) return false
+      k += 1
     }
     true
   }
 
   override protected def onProgressUpdate(values: AnyRef*) =
-    progressBar.setProgress(values(0).asInstanceOf[Integer].toInt)
+    progressBar.setProgress(values(0).asInstanceOf[Integer])
 
   override protected def onPostExecute(result: Boolean) =
     input.setBackgroundColor(if (result) Color.GREEN else Color.RED)
