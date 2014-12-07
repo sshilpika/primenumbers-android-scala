@@ -1,8 +1,8 @@
 package edu.luc.etl.cs313.android.scala.primechecker
 
-import org.junit.{Before,Ignore}
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
+import org.robolectric.{Robolectric, RobolectricTestRunner}
+import org.scalatest.junit.JUnitSuite
 
 /**
  * Concrete Robolectric test subclass. This test will not work in sbt.
@@ -12,17 +12,9 @@ import org.robolectric.RobolectricTestRunner
  * @author laufer
  * @see http://pivotal.github.com/robolectric
  */
-@Ignore
 @RunWith(classOf[RobolectricTestRunner])
-class RobolectricFunctionalTest extends AbstractFunctionalTest {
+class RobolectricFunctionalTest extends JUnitSuite with AbstractFunctionalTest {
 
-  override protected def activity() = _activity.get
-
-  private var _activity: Option[MainActivity] = None
-
-  @Before def setUp() {
-    _activity = Some(new MainActivity)
-    activity.onCreate(null)
-    activity.onResume()
-  }
+  override protected lazy val activity =
+    Robolectric.buildActivity(classOf[MainActivity]).create().start().get
 }
