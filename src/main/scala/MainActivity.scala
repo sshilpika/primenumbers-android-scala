@@ -3,7 +3,7 @@ package edu.luc.etl.cs313.android.scala.primechecker
 import android.os.{ AsyncTask, Bundle }
 import android.app.Activity
 import android.view.View
-import android.widget.{ ProgressBar, ToggleButton }
+import android.widget.ToggleButton
 import scala.collection.mutable.{ArraySeq, ArrayBuffer}
 
 class MainActivity extends Activity with TypedActivity with RollbarSupport {

@@ -23,6 +23,7 @@ script: "sbt coveralls"
 
 after_success:
 - >
+  BINTRAY_ORG=`echo ${BINTRAY_ORG} | tr '[:upper:]' '[:lower:]'` &&
   test "${TRAVIS_PULL_REQUEST}" = 'false' &&
   PROJECT_VERSION=$(TERM=dumb sbt 'show version' | tail -n 1 | cut -c8- -) &&
   BINTRAY_VERSION=${PROJECT_VERSION}.${TRAVIS_BUILD_NUMBER} &&
