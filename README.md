@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/lucoodevcourse/primenumbers-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/primenumbers-android-scala) 
-[![Coverage Status](https://img.shields.io/coveralls/lucoodevcourse/primenumbers-android-scala.svg)](https://coveralls.io/r/lucoodevcourse/primenumbers-android-scala) 
-[![Download](https://api.bintray.com/packages/lucoodevcourse/generic/primenumbers-android-scala/images/download.svg) ](https://bintray.com/lucoodevcourse/generic/primenumbers-android-scala/_latestVersion)
+[![Build Status](https://travis-ci.org/LoyolaChicagoCode/primenumbers-android-scala.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/primenumbers-android-scala) 
+[![Coverage Status](https://img.shields.io/coveralls/LoyolaChicagoCode/primenumbers-android-scala.svg)](https://coveralls.io/r/LoyolaChicagoCode/primenumbers-android-scala) 
+[![Download](https://api.bintray.com/packages/loyolachicagocode/generic/primenumbers-android-scala/images/download.svg) ](https://bintray.com/loyolachicagocode/generic/primenumbers-android-scala/_latestVersion)
 
 # Background
 
