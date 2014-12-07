@@ -1,44 +1,34 @@
 package edu.luc.etl.cs313.android.scala.primechecker
 
-import scala.collection.mutable.{ ArraySeq, ArrayBuffer }
 import android.os.{ AsyncTask, Bundle }
 import android.app.Activity
 import android.view.View
-import android.widget.{ ProgressBar, TextView, ToggleButton }
-import com.rollbar.android.Rollbar
+import android.widget.{ ProgressBar, ToggleButton }
+import scala.collection.mutable.{ArraySeq, ArrayBuffer}
 
 class MainActivity extends Activity with TypedActivity with RollbarSupport {
 
-  private var input: TextView = null
+  private def input = findView(TR.inputCandidate)
 
   private val NUM = 3
+
+  private def progressBars(i: Int) =
+    Array(findView(TR.progressBar1), findView(TR.progressBar2), findView(TR.progressBar3)).apply(i)
+
+  private def urls(i: Int) =
+    Array(findView(TR.inputUrl1), findView(TR.inputUrl2), findView(TR.inputUrl2)).apply(i)
 
   private val workers = new ArraySeq[Boolean](NUM)
 
   private val remotes = new ArraySeq[Boolean](NUM)
 
-  private val progressBars = new ArraySeq[ProgressBar](NUM)
+  private val localTasks = new ArrayBuffer[PrimeCheckerLocalTask](NUM)
 
-  private val urls = new ArraySeq[TextView](NUM)
-
-  private val localTasks = new ArrayBuffer[AsyncTask[AnyRef, AnyRef, Boolean]](NUM)
-
-  private val remoteTasks = new ArrayBuffer[PrimeCheckerRemoteTask](NUM);
+  private val remoteTasks = new ArrayBuffer[PrimeCheckerRemoteTask](NUM)
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.main)
-  }
-
-  override def onResume() = {
-    super.onResume()
-    input = findView(TR.inputCandidate)
-    progressBars(0) = findView(TR.progressBar1)
-    progressBars(1) = findView(TR.progressBar2)
-    progressBars(2) = findView(TR.progressBar3)
-    urls(0) = findView(TR.inputUrl1)
-    urls(1) = findView(TR.inputUrl2)
-    urls(2) = findView(TR.inputUrl3)
   }
 
   override def onDestroy() = {
@@ -65,8 +55,8 @@ class MainActivity extends Activity with TypedActivity with RollbarSupport {
   }
 
   def onCancel(view: View): Unit = {
-    localTasks foreach { _ cancel true }
-    remoteTasks foreach { _ cancel () }
+    localTasks foreach { _.cancel(true) }
+    remoteTasks foreach { _.cancel() }
     localTasks.clear()
     remoteTasks.clear()
   }
