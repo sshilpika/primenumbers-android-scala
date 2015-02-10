@@ -29,12 +29,12 @@ Please refer to [these notes](http://lucoodevcourse.bitbucket.org/notes/scalaand
 
 ## Sample prime numbers to try
 
-- 1013
-- 10007
-- 100003
-- 1000003
-- 10000169
-- 100000007
+- [1013](http://primenumber-shilpi.herokuapp.com/1013) 
+- [10007](http://primenumber-shilpi.herokuapp.com/10007) 
+- [100003](http://primenumber-shilpi.herokuapp.com/100003) 
+- [1000003](http://primenumber-shilpi.herokuapp.com/1000003) 
+- [10000169](http://primenumber-shilpi.herokuapp.com/10000169) 
+- [100000007](http://primenumber-shilpi.herokuapp.com/100000007) 
 
 # Sample non-prime numbers to try
 
