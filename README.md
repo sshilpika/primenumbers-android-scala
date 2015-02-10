@@ -38,7 +38,7 @@ Please refer to [these notes](http://lucoodevcourse.bitbucket.org/notes/scalaand
 
 # Sample non-prime numbers to try
 
-- 999989
+- [999989](http://primenumber-shilpi.herokuapp.com/999989)
 
 # References
 
